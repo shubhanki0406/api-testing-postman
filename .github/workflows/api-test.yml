@@ -1,6 +1,7 @@
 name: Run API Tests
 
-on: [push]
+on:
+  push:
 
 jobs:
   test:
@@ -10,7 +11,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Node
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
@@ -19,4 +20,12 @@ jobs:
         run: npm install -g newman
 
       - name: Run Postman Collection with Report
-        run:  npm install -g newman npm install -g newman-reporter-htmlextra newman run MyFirstAPICollection.json -r htmlextra --reporter-htmlextra-export report.html
+        run: |
+          npm install -g newman-reporter-htmlextra
+          newman run MyFirstAPICollection.json -r htmlextra --reporter-htmlextra-export report.html
+
+      - name: Upload Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-report
+          path: report.html
