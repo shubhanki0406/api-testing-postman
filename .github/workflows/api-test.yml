@@ -18,5 +18,5 @@ jobs:
       - name: Install Newman
         run: npm install -g newman
 
-      - name: Run Postman Collection
-        run: newman run MyFirstAPICollection.json
+      - name: Run Postman Collection with Report
+        run: npm install -g newman-reporter-htmlextra newman run MyFirstAPICollection.json -r htmlextra --reporter-htmlextra-export report.html
